@@ -1,0 +1,3 @@
+rootProject.name = 'spmedicalgroupMobile'
+
+include ':app'
