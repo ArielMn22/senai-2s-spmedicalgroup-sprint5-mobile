@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { View, Text, Image, StyleSheet, TextInput } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default class Login extends Component {
   static navigationOptions = {
@@ -32,6 +33,24 @@ export default class Login extends Component {
               placeholder="Insira seu e-mail"
             />
           </View>
+          <View>
+            {/* <Icon></Icon> */}
+            <TextInput
+              textContentType="password"
+              style={styles.inputSenha}
+              placeholder="Insira sua senha"
+            />
+          </View>
+          <View>
+            {/* <Icon></Icon> */}
+            <TouchableOpacity
+              style={styles.btnLogin}
+              onPress={this._realizarLogin}
+            >
+              {/* <Icon name="send" size={20} color="#000" /> */}
+              <Text style={styles.btnLoginText}>Login</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     );
@@ -46,13 +65,15 @@ const styles = StyleSheet.create({
     tintColor: "#262626"
   },
   upperLogoText: {
-    height: "50%",
+    // height: "50%",
     width: "100%",
     alignItems: "center",
-    padding: 40
+    marginTop: 20,
+    marginBottom: 20
+    // padding: 40
   },
   upperLogoTextText: {
-    color: "#81DF99",
+    color: "#262626",
     fontSize: 40,
     fontFamily: "Bahnschrift"
   },
@@ -68,17 +89,42 @@ const styles = StyleSheet.create({
   },
   loginForm: {
     width: "100%",
-    alignItems: "center",
-    padding: 25
+    height: "50%",
+    justifyContent: "space-between",
+    alignItems: "center"
   },
   loginh1: {
     fontSize: 35,
     color: "#262626"
   },
   inputEmail: {
-    width: 250,
+    width: 300,
     fontSize: 20,
-    backgroundColor: "#ccc",
-    borderRadius: 5
+    backgroundColor: "#fff",
+    borderRadius: 5,
+    shadowColor: "black",
+    shadowOffset: { width: 5, height: 5 },
+    shadowOpacity: 1
+  },
+  inputSenha: {
+    width: 300,
+    fontSize: 20,
+    backgroundColor: "#fff",
+    borderRadius: 5,
+    shadowColor: "black",
+    shadowOffset: { width: 5, height: 5 },
+    shadowOpacity: 1
+  },
+  btnLogin: {
+    width: 120,
+    height: 60,
+    backgroundColor: "#81DF99",
+    borderRadius: 100,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  btnLoginText: {
+    fontSize: 20,
+    color: "black"
   }
 });
