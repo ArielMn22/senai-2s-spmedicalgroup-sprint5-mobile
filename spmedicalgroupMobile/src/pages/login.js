@@ -1,8 +1,69 @@
 import React, { Component } from "react";
-import { View, Text, Image, StyleSheet, TextInput } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TextInput,
+  Alert,
+  AsyncStorage,
+  TouchableOpacity
+} from "react-native";
+
+import api from "../services/api";
+import Axios from "axios";
+import auth from "../services/auth"
 
 export default class Login extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      email: "",
+      senha: ""
+    };
+  }
+
+  logar = async () => {
+    // console.warn("I'm in!");
+    // Alert.alert("I'm in!");
+
+    let login = {
+      email: this.state.email,
+      senha: this.state.senha
+    };
+
+    // console.warn(login)
+
+    let config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+
+    // console.warn(config)
+
+    // await Axios.post("http://localhost:5000/api/login", {login}).then(
+    //   response => {
+    //     Alert.alert("Login efetuado com sucesso!");
+    //     AsyncStorage.setItem("spmedicalgroup-token", response.data);
+    //   }
+    // );
+
+    await api.post("/login", login, config).then(response => {
+      Alert.alert("Login efetuado com sucesso!");
+
+      let token = response.data.token;
+
+      // console.warn(response.data.token)
+      auth.setItem(token); // Atribui o token para AsyncStorage
+
+      // AsyncStorage.setItem("spmedicalgroup-token", response.data);
+
+      this.props.navigation.navigate("ListarConsultas");
+    });
+  };
+
   static navigationOptions = {
     tabBarIcon: ({ tintColor }) => (
       <Image
@@ -30,24 +91,22 @@ export default class Login extends Component {
             {/* <Icon></Icon> */}
             <TextInput
               style={styles.inputEmail}
+              defaultValue="mariana@outlook.com"
               placeholder="Insira seu e-mail"
+              onChangeText={email => this.setState({ email })}
             />
           </View>
           <View>
             {/* <Icon></Icon> */}
             <TextInput
-              textContentType="password"
               style={styles.inputSenha}
+              defaultValue="Mariana"
               placeholder="Insira sua senha"
+              onChangeText={senha => this.setState({ senha })}
             />
           </View>
           <View>
-            {/* <Icon></Icon> */}
-            <TouchableOpacity
-              style={styles.btnLogin}
-              onPress={this._realizarLogin}
-            >
-              {/* <Icon name="send" size={20} color="#000" /> */}
+            <TouchableOpacity style={styles.btnLogin} onPress={this.logar}>
               <Text style={styles.btnLoginText}>Login</Text>
             </TouchableOpacity>
           </View>
