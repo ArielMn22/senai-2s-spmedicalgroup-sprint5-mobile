@@ -1,140 +1,94 @@
 import React, { Component } from "react";
 import { View, Text, Image, StyleSheet, AsyncStorage } from "react-native";
-import { Table, Row } from "react-native-table-component";
+import { Table, Row, Rows, TableWrapper, Cell } from "react-native-table-component";
 import api from "../services/api";
 import auth from "../services/auth";
+import jwtDecode from "jwt-decode";
 
 export default class ListarConsultas extends Component {
   constructor() {
     super();
 
     this.state = {
-      listaConsultas: [
-        // {
-        //   id: 1,
-        //   pacienteNome: "Mariana",
-        //   pacienteEmail: "mariana@outlook.com",
-        //   medicoNome: "Helena Strada",
-        //   medicoEmail: "helena.strada@spmedicalgroup.com.br",
-        //   especialidade: "Pediatria",
-        //   descricao: "Morreu",
-        //   dataConsulta: "20/01/2019 15:00:00",
-        //   preco: "0",
-        //   status: "Confirmada"
-        // },
-        // {
-        //   id: 6,
-        //   pacienteNome: "Mariana",
-        //   pacienteEmail: "mariana@outlook.com",
-        //   medicoNome: "Helena Strada",
-        //   medicoEmail: "helena.strada@spmedicalgroup.com.br",
-        //   especialidade: "Pediatria",
-        //   descricao: "Sem observações",
-        //   dataConsulta: "08/02/2019 15:00:00",
-        //   preco: "0",
-        //   status: "Agendada"
-        // },
-        // {
-        //   id: 8,
-        //   pacienteNome: "Mariana",
-        //   pacienteEmail: "mariana@outlook.com",
-        //   medicoNome: "Helena Strada",
-        //   medicoEmail: "helena.strada@spmedicalgroup.com.br",
-        //   especialidade: "Pediatria",
-        //   descricao: "NOVA3",
-        //   dataConsulta: "20/01/2019 15:31:00",
-        //   preco: "0",
-        //   status: "Adiada"
-        // },
-        // {
-        //   id: 13,
-        //   pacienteNome: "Mariana",
-        //   pacienteEmail: "mariana@outlook.com",
-        //   medicoNome: "Helena Strada",
-        //   medicoEmail: "helena.strada@spmedicalgroup.com.br",
-        //   especialidade: "Pediatria",
-        //   descricao: "NOVA3",
-        //   dataConsulta: "20/02/2019 15:00:00",
-        //   preco: "0",
-        //   status: "Adiada"
-        // },
-        // {
-        //   id: 14,
-        //   pacienteNome: "Mariana",
-        //   pacienteEmail: "mariana@outlook.com",
-        //   medicoNome: "Helena Strada",
-        //   medicoEmail: "helena.strada@spmedicalgroup.com.br",
-        //   especialidade: "Pediatria",
-        //   descricao: "NOVA",
-        //   dataConsulta: "20/01/2015 15:31:31",
-        //   preco: "0",
-        //   status: "Adiada"
-        // },
-        // {
-        //   id: 15,
-        //   pacienteNome: "Mariana",
-        //   pacienteEmail: "mariana@outlook.com",
-        //   medicoNome: "Helena Strada",
-        //   medicoEmail: "helena.strada@spmedicalgroup.com.br",
-        //   especialidade: "Pediatria",
-        //   descricao: "NOVA",
-        //   dataConsulta: "20/01/2012 15:31:31",
-        //   preco: "333",
-        //   status: "Adiada"
-        // },
-        // {
-        //   id: 16,
-        //   pacienteNome: "Mariana",
-        //   pacienteEmail: "mariana@outlook.com",
-        //   medicoNome: "Helena Strada",
-        //   medicoEmail: "helena.strada@spmedicalgroup.com.br",
-        //   especialidade: "Pediatria",
-        //   descricao: "NOVA",
-        //   dataConsulta: "12/06/2005 12:35:00",
-        //   preco: "333",
-        //   status: "Adiada"
-        // },
-        // {
-        //   id: 17,
-        //   pacienteNome: "Mariana",
-        //   pacienteEmail: "mariana@outlook.com",
-        //   medicoNome: "Helena Strada",
-        //   medicoEmail: "helena.strada@spmedicalgroup.com.br",
-        //   especialidade: "Pediatria",
-        //   descricao: "NOVA",
-        //   dataConsulta: "12/06/2002 12:35:00",
-        //   preco: "333",
-        //   status: "Adiada"
-        // },
-        // {
-        //   id: 18,
-        //   pacienteNome: "Mariana",
-        //   pacienteEmail: "mariana@outlook.com",
-        //   medicoNome: "Helena Strada",
-        //   medicoEmail: "helena.strada@spmedicalgroup.com.br",
-        //   especialidade: "Pediatria",
-        //   descricao: "NOVA",
-        //   dataConsulta: "12/06/2001 12:35:00",
-        //   preco: "333",
-        //   status: "Adiada"
-        // }
-      ],
+      listaConsultas: [],
       listaConsultasHead: [
-        "id",
-        "pacienteNome",
-        "pacienteEmail",
-        "medicoNome",
-        "medicoEmail",
-        "especialidade",
-        "descricao",
-        "dataConsulta",
-        "preco",
-        "status"
-      ]
+        // "id",
+        // "pacienteNome",
+        // "pacienteEmail",
+        // "medicoNome",
+        // "medicoEmail",
+        // "especialidade",
+        // "descricao",
+        // "dataConsulta",
+        // "preco",
+        // "status"
+      ],
+      listaConsultasFiltrada: []
     };
   }
 
-  _filtrarConsultas() {}
+  _filtrarConsultas(token) {
+    let decode = jwtDecode(token);
+    // console.warn(decode);
+
+    if (decode.tipoUsuario == "Médico") {
+      this.setState({
+        listaConsultasHead: [
+          // "ID",
+          "Paciente",
+          // "Descrição",
+          "Data da Consulta",
+          // "Preço",
+          "Status"
+        ]
+      });
+
+      let novaLista = [];
+
+      this.state.listaConsultas.map(consulta => {
+        let novaConsulta = {
+          // id: consulta.id,
+          paciente: consulta.pacienteNome,
+          // descricao: consulta.descricao,
+          dataConsulta: consulta.dataConsulta,
+          // preco: consulta.preco,
+          status: consulta.status
+        };
+
+        novaLista.push(novaConsulta);
+      });
+
+      this.setState({ listaConsultasFiltrada: novaLista });
+    } else if (decode.tipoUsuario == "Paciente") {
+      this.setState({
+        listaConsultasHead: [
+          // "ID",
+          "Médico",
+          // "Descrição",
+          "Data da Consulta",
+          // "Preço",
+          "Status"
+        ]
+      });
+
+      let novaLista = [];
+
+      this.state.listaConsultas.map(consulta => {
+        let novaConsulta = {
+          // id: consulta.id,
+          medico: consulta.medicoNome,
+          // descricao: consulta.descricao,
+          dataConsulta: consulta.dataConsulta,
+          // preco: consulta.preco,
+          status: consulta.status
+        };
+
+        novaLista.push(novaConsulta);
+      });
+
+      this.setState({ listaConsultasFiltrada: novaLista });
+    }
+  }
 
   componentDidMount = async () => {
     let token = await auth.getItem().then(res => (token = res));
@@ -146,9 +100,6 @@ export default class ListarConsultas extends Component {
       }
     };
 
-    console.warn(token);
-    console.warn(config);
-
     await api
       .get("/consultas/listarporusuariologado", config)
       .then(response => {
@@ -156,7 +107,7 @@ export default class ListarConsultas extends Component {
       })
       .catch(erro => console.warn(erro));
 
-    this._filtrarConsultas();
+    this._filtrarConsultas(token);
   };
 
   static navigationOptions = {
@@ -186,20 +137,40 @@ export default class ListarConsultas extends Component {
           <Text style={styles.h1}>Minhas Consultas</Text>
 
           <View style={styles.listaConsultas}>
-            {/* borderStyle={{ borderWidth: 2, borderColor: "#c8e1ff" }} */}
+            {/* borderStyle={{ borderWidth: 1, borderColor: "red" }} */}
             <Table>
               <Row
                 style={styles.tableHead}
+                textStyle={styles.tableHeadText}
                 data={this.state.listaConsultasHead}
               />
-              {this.state.listaConsultas.map((rowData, index) => {
+
+              {this.state.listaConsultasFiltrada.map(aquelaConsultaBraba => {
+                return (
+                  <View>
+                    <TableWrapper>
+                      {aquelaConsultaBraba.map(celulas => {
+                        <Cell data={aquelaConsultaBraba}></Cell>
+                      })}
+                    </TableWrapper>
+                  </View>
+                )
+              })}
+             
+              {/* {this.state.listaConsultasFiltrada.map((rowData, index) => {
                 let a = Object.values(rowData);
                 return (
                   <View>
-                    <Row key={index} data={a} style={styles.tableRow} />
+                    {(rowData.status == "Confirmada") ? ()}
+                    <Row
+                      key={index}
+                      data={a}
+                      textStyle={styles.tableRowText}
+                      style={styles.tableRow}
+                    />
                   </View>
                 );
-              })}
+              })} */}
             </Table>
           </View>
         </View>
@@ -240,10 +211,30 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   listaConsultas: {
+    marginTop: 20,
     width: "100%"
   },
   tableHead: {
     // width: 600
-    width: "100%"
+    width: "100%",
+    // border: "none",
+    backgroundColor: "#e1e1e1"
+  },
+  tableHeadText: {
+    fontSize: 25,
+    color: "black",
+    textAlign: "center"
+  },
+  tableRow: {
+    // alignItems: "center",
+    // justifyContent: "center"
+  },
+  tableRowText: {
+    textAlign: "center",
+    color: "#757575",
+    fontSize: 20
+  },
+  tableBorder: {
+    borderColor: "#262626"
   }
 });

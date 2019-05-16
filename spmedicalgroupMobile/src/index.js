@@ -17,6 +17,7 @@ const BottomTabNavigator = createBottomTabNavigator(
   },
   {
     initialRouteName: "Login",
+    // initialRouteName: "ListarConsultas",
     swipeEnabled: true,
     tabBarOptions: {
       showLabel: false,

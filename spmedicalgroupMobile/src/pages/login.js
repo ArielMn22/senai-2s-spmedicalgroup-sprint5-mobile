@@ -101,6 +101,7 @@ export default class Login extends Component {
             <TextInput
               style={styles.inputSenha}
               defaultValue="Mariana"
+              secureTextEntry={true}
               placeholder="Insira sua senha"
               onChangeText={senha => this.setState({ senha })}
             />
