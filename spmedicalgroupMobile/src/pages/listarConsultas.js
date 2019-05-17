@@ -18,80 +18,16 @@ import {
 import api from "../services/api";
 import auth from "../services/auth";
 import jwtDecode from "jwt-decode";
-// import { ScrollView } from "react-native-gesture-handler";
+import GerarLinhaConsulta from "../components/GerarLinhaConsulta";
 
 export default class ListarConsultas extends Component {
   constructor() {
     super();
 
     this.state = {
-      listaConsultas: [],
-      listaConsultasHead: [],
-      listaConsultasFiltrada: []
+      tipoUsuario: "",
+      listaConsultas: []
     };
-  }
-
-  _filtrarConsultas(token) {
-    let decode = jwtDecode(token);
-    // console.warn(decode);
-
-    if (decode.tipoUsuario == "Médico") {
-      this.setState({
-        listaConsultasHead: [
-          // "ID",
-          "Paciente",
-          // "Descrição",
-          "Data da Consulta",
-          // "Preço",
-          "Status"
-        ]
-      });
-
-      let novaLista = [];
-
-      this.state.listaConsultas.map(consulta => {
-        let novaConsulta = {
-          // id: consulta.id,
-          paciente: consulta.pacienteNome,
-          // descricao: consulta.descricao,
-          dataConsulta: consulta.dataConsulta,
-          // preco: consulta.preco,
-          status: consulta.status
-        };
-
-        novaLista.push(novaConsulta);
-      });
-
-      this.setState({ listaConsultasFiltrada: novaLista });
-    } else if (decode.tipoUsuario == "Paciente") {
-      this.setState({
-        listaConsultasHead: [
-          // "ID",
-          "Médico",
-          // "Descrição",
-          "Data da Consulta",
-          // "Preço",
-          "Status"
-        ]
-      });
-
-      let novaLista = [];
-
-      this.state.listaConsultas.map(consulta => {
-        let novaConsulta = {
-          // id: consulta.id,
-          medico: consulta.medicoNome,
-          // descricao: consulta.descricao,
-          dataConsulta: consulta.dataConsulta,
-          // preco: consulta.preco,
-          status: consulta.status
-        };
-
-        novaLista.push(novaConsulta);
-      });
-
-      this.setState({ listaConsultasFiltrada: novaLista });
-    }
   }
 
   componentDidMount = async () => {
@@ -108,10 +44,9 @@ export default class ListarConsultas extends Component {
       .get("/consultas/listarporusuariologado", config)
       .then(response => {
         this.setState({ listaConsultas: response.data });
+        console.warn(this.state.listaConsultas);
       })
       .catch(erro => console.warn(erro));
-
-    this._filtrarConsultas(token);
   };
 
   static navigationOptions = {
@@ -122,6 +57,14 @@ export default class ListarConsultas extends Component {
       />
     )
   };
+
+  renderizaConsulta = ({ item, index }) => (
+    <GerarLinhaConsulta
+      item={item}
+      index={index}
+      tipoUsuario={this.state.tipoUsuario}
+    />
+  );
 
   render() {
     return (
@@ -141,27 +84,12 @@ export default class ListarConsultas extends Component {
           <Text style={styles.h1}>Minhas Consultas</Text>
 
           <View style={styles.listaConsultas}>
-            <Table>
-              <Row
-                style={styles.tableHead}
-                textStyle={styles.tableHeadText}
-                data={this.state.listaConsultasHead}
-              />
-
-                {this.state.listaConsultasFiltrada.map((rowData, index) => {
-                  let a = Object.values(rowData);
-                  return (
-                    <View>
-                      <Row
-                        key={index}
-                        data={a}
-                        textStyle={styles.tableRowText}
-                        style={styles.tableRow}
-                      />
-                    </View>
-                  );
-                })}
-            </Table>
+            <FlatList
+              // contentContainerStyle={styles.table}
+              data={this.state.listaConsultas}
+              keyExtractor={item => item.id.toString()}
+              renderItem={this.renderizaConsulta}
+            />
           </View>
         </View>
       </View>
@@ -205,10 +133,13 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%"
   },
-  tableHead: {
-    // width: 600
+  table: {
     width: "100%",
-    // border: "none",
+    height: "100%",
+    backgroundColor: "blue"
+  },
+  tableHead: {
+    width: "100%",
     backgroundColor: "#e1e1e1"
   },
   tableHeadText: {
@@ -217,8 +148,15 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   tableRow: {
-    // alignItems: "center",
-    // justifyContent: "center"
+    width: "100%",
+    height: 100,
+    flexDirection: "row"
+  },
+  tableRowCinza: {
+    width: "100%",
+    height: 100,
+    flexDirection: "row",
+    backgroundColor: "#ccc"
   },
   tableRowText: {
     textAlign: "center",
@@ -227,5 +165,12 @@ const styles = StyleSheet.create({
   },
   tableBorder: {
     borderColor: "#262626"
+  },
+  tableCell: {
+    // height: 70,
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
+    // width: 150
   }
 });

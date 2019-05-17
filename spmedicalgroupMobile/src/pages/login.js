@@ -41,25 +41,10 @@ export default class Login extends Component {
       }
     };
 
-    // console.warn(config)
-
-    // await Axios.post("http://localhost:5000/api/login", {login}).then(
-    //   response => {
-    //     Alert.alert("Login efetuado com sucesso!");
-    //     AsyncStorage.setItem("spmedicalgroup-token", response.data);
-    //   }
-    // );
-
     await api.post("/login", login, config).then(response => {
       Alert.alert("Login efetuado com sucesso!");
-
       let token = response.data.token;
-
-      // console.warn(response.data.token)
       auth.setItem(token); // Atribui o token para AsyncStorage
-
-      // AsyncStorage.setItem("spmedicalgroup-token", response.data);
-
       this.props.navigation.navigate("ListarConsultas");
     });
   };

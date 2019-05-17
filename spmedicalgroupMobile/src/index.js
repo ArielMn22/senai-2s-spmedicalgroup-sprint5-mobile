@@ -12,12 +12,12 @@ const AuthStack = createStackNavigator({ Login });
 
 const BottomTabNavigator = createBottomTabNavigator(
   {
-    Login,
+    // Login,
     ListarConsultas
   },
   {
-    initialRouteName: "Login",
-    // initialRouteName: "ListarConsultas",
+    // initialRouteName: "Login",
+    initialRouteName: "ListarConsultas",
     swipeEnabled: true,
     tabBarOptions: {
       showLabel: false,
