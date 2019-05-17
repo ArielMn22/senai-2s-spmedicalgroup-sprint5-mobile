@@ -1,9 +1,24 @@
 import React, { Component } from "react";
-import { View, Text, Image, StyleSheet, AsyncStorage } from "react-native";
-import { Table, Row, Rows, TableWrapper, Cell } from "react-native-table-component";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  FlatList,
+  Alert,
+  ScrollView
+} from "react-native";
+import {
+  Table,
+  Row,
+  Rows,
+  TableWrapper,
+  Cell
+} from "react-native-table-component";
 import api from "../services/api";
 import auth from "../services/auth";
 import jwtDecode from "jwt-decode";
+// import { ScrollView } from "react-native-gesture-handler";
 
 export default class ListarConsultas extends Component {
   constructor() {
@@ -11,18 +26,7 @@ export default class ListarConsultas extends Component {
 
     this.state = {
       listaConsultas: [],
-      listaConsultasHead: [
-        // "id",
-        // "pacienteNome",
-        // "pacienteEmail",
-        // "medicoNome",
-        // "medicoEmail",
-        // "especialidade",
-        // "descricao",
-        // "dataConsulta",
-        // "preco",
-        // "status"
-      ],
+      listaConsultasHead: [],
       listaConsultasFiltrada: []
     };
   }
@@ -137,7 +141,6 @@ export default class ListarConsultas extends Component {
           <Text style={styles.h1}>Minhas Consultas</Text>
 
           <View style={styles.listaConsultas}>
-            {/* borderStyle={{ borderWidth: 1, borderColor: "red" }} */}
             <Table>
               <Row
                 style={styles.tableHead}
@@ -145,32 +148,19 @@ export default class ListarConsultas extends Component {
                 data={this.state.listaConsultasHead}
               />
 
-              {this.state.listaConsultasFiltrada.map(aquelaConsultaBraba => {
-                return (
-                  <View>
-                    <TableWrapper>
-                      {aquelaConsultaBraba.map(celulas => {
-                        <Cell data={aquelaConsultaBraba}></Cell>
-                      })}
-                    </TableWrapper>
-                  </View>
-                )
-              })}
-             
-              {/* {this.state.listaConsultasFiltrada.map((rowData, index) => {
-                let a = Object.values(rowData);
-                return (
-                  <View>
-                    {(rowData.status == "Confirmada") ? ()}
-                    <Row
-                      key={index}
-                      data={a}
-                      textStyle={styles.tableRowText}
-                      style={styles.tableRow}
-                    />
-                  </View>
-                );
-              })} */}
+                {this.state.listaConsultasFiltrada.map((rowData, index) => {
+                  let a = Object.values(rowData);
+                  return (
+                    <View>
+                      <Row
+                        key={index}
+                        data={a}
+                        textStyle={styles.tableRowText}
+                        style={styles.tableRow}
+                      />
+                    </View>
+                  );
+                })}
             </Table>
           </View>
         </View>
@@ -212,7 +202,8 @@ const styles = StyleSheet.create({
   },
   listaConsultas: {
     marginTop: 20,
-    width: "100%"
+    width: "100%",
+    height: "100%"
   },
   tableHead: {
     // width: 600
