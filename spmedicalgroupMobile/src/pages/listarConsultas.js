@@ -33,6 +33,10 @@ export default class ListarConsultas extends Component {
   componentDidMount = async () => {
     let token = await auth.getItem().then(res => (token = res));
 
+    let decode = jwtDecode(token);
+    
+    this.setState({nomeUsuario : decode.nomeUsuario})
+
     let config = {
       headers: {
         "Content-Type": "application/json",
@@ -44,7 +48,7 @@ export default class ListarConsultas extends Component {
       .get("/consultas/listarporusuariologado", config)
       .then(response => {
         this.setState({ listaConsultas: response.data });
-        console.warn(this.state.listaConsultas);
+        // console.warn(this.state.listaConsultas);
       })
       .catch(erro => console.warn(erro));
   };
@@ -77,13 +81,49 @@ export default class ListarConsultas extends Component {
             />
           </View>
           <View style={styles.headerUserSettings}>
-            <Text style={styles.headerUserSettingsText}>Dona Neuza</Text>
+            <Text style={styles.headerUserSettingsText}>{this.state.nomeUsuario}</Text>
+            <Image 
+              source={require("../assets/imgs/angle-arrow-down.png")}
+              style={styles.headerUserSettingsImg}
+            />
           </View>
         </View>
         <View style={styles.container}>
           <Text style={styles.h1}>Minhas Consultas</Text>
 
           <View style={styles.listaConsultas}>
+            {this.state.tipoUsuario == "Médico" ? (
+              <View style={styles.tableHead}>
+                <View style={styles.tableCell}>
+
+                <Text style={styles.tableHeadText}>Paciente</Text>
+                </View>
+                <View style={styles.tableCell}>
+
+                <Text style={styles.tableHeadText}>Data</Text>
+                </View>
+                <View style={styles.tableCell}>
+
+                <Text style={styles.tableHeadText}>Status</Text>
+                </View>
+              </View>
+            ) : (
+              <View style={styles.tableHead}>
+          <View style={styles.tableCell}>
+
+<Text style={styles.tableHeadText}>Médico</Text>
+</View>
+<View style={styles.tableCell}>
+
+<Text style={styles.tableHeadText}>Data</Text>
+</View>
+<View style={styles.tableCell}>
+
+<Text style={styles.tableHeadText}>Status</Text>
+</View>
+              </View>
+            )}
+
             <FlatList
               // contentContainerStyle={styles.table}
               data={this.state.listaConsultas}
@@ -98,7 +138,11 @@ export default class ListarConsultas extends Component {
 }
 
 const styles = StyleSheet.create({
-  main: {},
+  main: {
+    height: '100%',
+    width: '100%',
+    // justifyContent: 'center'
+  },
   tabNavigatorIconHome: {
     height: 35,
     width: 35,
@@ -115,11 +159,17 @@ const styles = StyleSheet.create({
   },
   headerUserSettings: {
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    flexDirection: 'row'
   },
   headerUserSettingsText: {
     color: "#262626",
     fontSize: 20
+  },
+  headerUserSettingsImg : {
+    height: 20,
+    width: 20,
+    marginLeft: 5
   },
   h1: {
     color: "#262626",
@@ -140,7 +190,15 @@ const styles = StyleSheet.create({
   },
   tableHead: {
     width: "100%",
-    backgroundColor: "#e1e1e1"
+    backgroundColor: "#e1e1e1",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    height: 70,
+    shadowColor: 'green',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 1 ,
+    shadowRadius: 2,
   },
   tableHeadText: {
     fontSize: 25,

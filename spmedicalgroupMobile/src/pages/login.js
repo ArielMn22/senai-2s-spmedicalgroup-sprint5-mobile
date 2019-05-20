@@ -11,10 +11,13 @@ import {
 } from "react-native";
 
 import api from "../services/api";
-import Axios from "axios";
 import auth from "../services/auth"
 
 export default class Login extends Component {
+  static navigationOptions = {
+    header: null
+  };
+
   constructor(props) {
     super(props);
 
@@ -25,15 +28,10 @@ export default class Login extends Component {
   }
 
   logar = async () => {
-    // console.warn("I'm in!");
-    // Alert.alert("I'm in!");
-
     let login = {
       email: this.state.email,
       senha: this.state.senha
     };
-
-    // console.warn(login)
 
     let config = {
       headers: {
@@ -47,15 +45,6 @@ export default class Login extends Component {
       auth.setItem(token); // Atribui o token para AsyncStorage
       this.props.navigation.navigate("ListarConsultas");
     });
-  };
-
-  static navigationOptions = {
-    tabBarIcon: ({ tintColor }) => (
-      <Image
-        source={require("../assets/imgs/login.png")}
-        style={styles.tabNavigatorIconHome}
-      />
-    )
   };
 
   render() {
@@ -73,7 +62,6 @@ export default class Login extends Component {
         <View style={styles.loginForm}>
           <Text style={styles.loginh1}>Login</Text>
           <View>
-            {/* <Icon></Icon> */}
             <TextInput
               style={styles.inputEmail}
               defaultValue="mariana@outlook.com"
@@ -82,7 +70,6 @@ export default class Login extends Component {
             />
           </View>
           <View>
-            {/* <Icon></Icon> */}
             <TextInput
               style={styles.inputSenha}
               defaultValue="Mariana"
@@ -103,7 +90,11 @@ export default class Login extends Component {
 }
 
 const styles = StyleSheet.create({
-  main: {},
+  main: {
+    height: '100%',
+    width: '100%',
+    justifyContent: 'center'
+  },
   tabNavigatorIconHome: {
     height: 35,
     width: 35,

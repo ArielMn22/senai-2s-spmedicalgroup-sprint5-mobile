@@ -10,13 +10,11 @@ import ListarConsultas from "./pages/listarConsultas";
 
 const AuthStack = createStackNavigator({ Login });
 
-const BottomTabNavigator = createBottomTabNavigator(
+const BottomTabNavigator = createBottomTabNavigator (
   {
-    // Login,
     ListarConsultas
   },
   {
-    // initialRouteName: "Login",
     initialRouteName: "ListarConsultas",
     swipeEnabled: true,
     tabBarOptions: {
@@ -41,6 +39,7 @@ export default createAppContainer(
     },
     {
       initialRouteName: "BottomTabNavigator"
+      // initialRouteName: "AuthStack"
     }
   )
 );
