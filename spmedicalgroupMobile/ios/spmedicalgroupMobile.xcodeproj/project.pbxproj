@@ -41,6 +41,10 @@
 		ED2971652150620600B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2971642150620600B7C4FE /* JavaScriptCore.framework */; };
 		22FB2B86C523439A93EFD99B /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0612A7F2A560493AA2CFF124 /* libRNGestureHandler.a */; };
 		1FFCDACFE83740FBA5FA0C44 /* libRNGestureHandler-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 60170624D3234ADF8DB8D21D /* libRNGestureHandler-tvOS.a */; };
+		A2879984DB2442C88216978C /* bahnschrift_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1D337C464D134CE6821DEBB2 /* bahnschrift_bold.ttf */; };
+		7F669B63E4554053B53F699B /* bahnschrift_light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FFDC43A46313479A91CC3181 /* bahnschrift_light.ttf */; };
+		21B1142BA41B4CEC86C889D4 /* bahnschrift_reg.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 603E80C5929A48CFA4E34531 /* bahnschrift_reg.ttf */; };
+		95265C2BF0584382AB323621 /* bahnschrift._semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0D0E29DCA83946919BE648BA /* bahnschrift._semibold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -351,6 +355,10 @@
 		CFA812C9B1804552B3A1E3C4 /* RNGestureHandler.xcodeproj */ = {isa = PBXFileReference; name = "RNGestureHandler.xcodeproj"; path = "../node_modules/react-native-gesture-handler/ios/RNGestureHandler.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		0612A7F2A560493AA2CFF124 /* libRNGestureHandler.a */ = {isa = PBXFileReference; name = "libRNGestureHandler.a"; path = "libRNGestureHandler.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		60170624D3234ADF8DB8D21D /* libRNGestureHandler-tvOS.a */ = {isa = PBXFileReference; name = "libRNGestureHandler-tvOS.a"; path = "libRNGestureHandler-tvOS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		1D337C464D134CE6821DEBB2 /* bahnschrift_bold.ttf */ = {isa = PBXFileReference; name = "bahnschrift_bold.ttf"; path = "../src/assets/fonts/bahnschrift_bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		FFDC43A46313479A91CC3181 /* bahnschrift_light.ttf */ = {isa = PBXFileReference; name = "bahnschrift_light.ttf"; path = "../src/assets/fonts/bahnschrift_light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		603E80C5929A48CFA4E34531 /* bahnschrift_reg.ttf */ = {isa = PBXFileReference; name = "bahnschrift_reg.ttf"; path = "../src/assets/fonts/bahnschrift_reg.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		0D0E29DCA83946919BE648BA /* bahnschrift._semibold.ttf */ = {isa = PBXFileReference; name = "bahnschrift._semibold.ttf"; path = "../src/assets/fonts/bahnschrift._semibold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -592,6 +600,7 @@
 				00E356EF1AD99517003FC87E /* spmedicalgroupMobileTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
+				59AA114F2F7644959A533D15 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -617,6 +626,18 @@
 			);
 			name = Products;
 			sourceTree = "<group>";
+		};
+		59AA114F2F7644959A533D15 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				1D337C464D134CE6821DEBB2 /* bahnschrift_bold.ttf */,
+				FFDC43A46313479A91CC3181 /* bahnschrift_light.ttf */,
+				603E80C5929A48CFA4E34531 /* bahnschrift_reg.ttf */,
+				0D0E29DCA83946919BE648BA /* bahnschrift._semibold.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -1064,6 +1085,10 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				A2879984DB2442C88216978C /* bahnschrift_bold.ttf in Resources */,
+				7F669B63E4554053B53F699B /* bahnschrift_light.ttf in Resources */,
+				21B1142BA41B4CEC86C889D4 /* bahnschrift_reg.ttf in Resources */,
+				95265C2BF0584382AB323621 /* bahnschrift._semibold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

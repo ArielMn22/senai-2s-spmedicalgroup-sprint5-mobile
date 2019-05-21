@@ -8,17 +8,12 @@ import {
   Alert,
   ScrollView
 } from "react-native";
-import {
-  Table,
-  Row,
-  Rows,
-  TableWrapper,
-  Cell
-} from "react-native-table-component";
+
 import api from "../services/api";
 import auth from "../services/auth";
 import jwtDecode from "jwt-decode";
 import GerarLinhaConsulta from "../components/GerarLinhaConsulta";
+import Header from "../components/Header";
 
 export default class ListarConsultas extends Component {
   constructor() {
@@ -35,7 +30,8 @@ export default class ListarConsultas extends Component {
 
     let decode = jwtDecode(token);
     
-    this.setState({nomeUsuario : decode.nomeUsuario})
+    this.setState({ nomeUsuario: decode.nomeUsuario });
+    this.setState({ tipoUsuario: decode.tipoUsuario});
 
     let config = {
       headers: {
@@ -43,11 +39,11 @@ export default class ListarConsultas extends Component {
         Authorization: "bearer " + token
       }
     };
-
+    
     await api
-      .get("/consultas/listarporusuariologado", config)
-      .then(response => {
-        this.setState({ listaConsultas: response.data });
+    .get("/consultas/listarporusuariologado", config)
+    .then(response => {
+      this.setState({ listaConsultas: response.data });
         // console.warn(this.state.listaConsultas);
       })
       .catch(erro => console.warn(erro));
@@ -56,7 +52,7 @@ export default class ListarConsultas extends Component {
   static navigationOptions = {
     tabBarIcon: ({ tintColor }) => (
       <Image
-        source={require("../assets/imgs/man-user.png")}
+        source={require("../assets/imgs/agenda.png")}
         style={styles.tabNavigatorIconHome}
       />
     )
@@ -73,54 +69,35 @@ export default class ListarConsultas extends Component {
   render() {
     return (
       <View style={styles.main}>
-        <View style={styles.header}>
-          <View style={styles.headerImage}>
-            <Image
-              style={styles.headerImageImg}
-              source={require("../assets/imgs/SPMedicalGroup-logo.png")}
-            />
-          </View>
-          <View style={styles.headerUserSettings}>
-            <Text style={styles.headerUserSettingsText}>{this.state.nomeUsuario}</Text>
-            <Image 
-              source={require("../assets/imgs/angle-arrow-down.png")}
-              style={styles.headerUserSettingsImg}
-            />
-          </View>
-        </View>
+       <Header />
         <View style={styles.container}>
+
           <Text style={styles.h1}>Minhas Consultas</Text>
 
           <View style={styles.listaConsultas}>
-            {this.state.tipoUsuario == "Médico" ? (
+            {this.state.tipoUsuario === "Médico" ? (
               <View style={styles.tableHead}>
                 <View style={styles.tableCell}>
-
-                <Text style={styles.tableHeadText}>Paciente</Text>
+                  <Text style={styles.tableHeadText}>Paciente</Text>
                 </View>
                 <View style={styles.tableCell}>
-
-                <Text style={styles.tableHeadText}>Data</Text>
+                  <Text style={styles.tableHeadText}>Data</Text>
                 </View>
                 <View style={styles.tableCell}>
-
-                <Text style={styles.tableHeadText}>Status</Text>
+                  <Text style={styles.tableHeadText}>Status</Text>
                 </View>
               </View>
             ) : (
               <View style={styles.tableHead}>
-          <View style={styles.tableCell}>
-
-<Text style={styles.tableHeadText}>Médico</Text>
-</View>
-<View style={styles.tableCell}>
-
-<Text style={styles.tableHeadText}>Data</Text>
-</View>
-<View style={styles.tableCell}>
-
-<Text style={styles.tableHeadText}>Status</Text>
-</View>
+                <View style={styles.tableCell}>
+                  <Text style={styles.tableHeadText}>Médico</Text>
+                </View>
+                <View style={styles.tableCell}>
+                  <Text style={styles.tableHeadText}>Data</Text>
+                </View>
+                <View style={styles.tableCell}>
+                  <Text style={styles.tableHeadText}>Status</Text>
+                </View>
               </View>
             )}
 
@@ -139,19 +116,20 @@ export default class ListarConsultas extends Component {
 
 const styles = StyleSheet.create({
   main: {
-    height: '100%',
-    width: '100%',
+    height: "100%",
+    width: "100%"
     // justifyContent: 'center'
   },
   tabNavigatorIconHome: {
     height: 35,
     width: 35,
-    tintColor: "#262626"
+    tintColor: "#3981A7"
   },
   header: {
     padding: 20,
     flexDirection: "row",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    backgroundColor : "white"
   },
   headerImageImg: {
     height: 53,
@@ -160,22 +138,25 @@ const styles = StyleSheet.create({
   headerUserSettings: {
     justifyContent: "center",
     alignItems: "center",
-    flexDirection: 'row'
+    flexDirection: "row"
   },
   headerUserSettingsText: {
     color: "#262626",
-    fontSize: 20
+    fontSize: 20,
+    fontFamily: "bahnschrift_reg"
   },
-  headerUserSettingsImg : {
+  headerUserSettingsImg: {
     height: 20,
     width: 20,
     marginLeft: 5
   },
   h1: {
     color: "#262626",
-    fontSize: 30
+    fontSize: 30,
+    fontFamily: "bahnschrift_reg"
   },
   container: {
+    backgroundColor: 'white',
     alignItems: "center"
   },
   listaConsultas: {
@@ -191,16 +172,17 @@ const styles = StyleSheet.create({
   tableHead: {
     width: "100%",
     backgroundColor: "#e1e1e1",
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     height: 70,
-    shadowColor: 'green',
+    shadowColor: "green",
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 1 ,
-    shadowRadius: 2,
+    shadowOpacity: 1,
+    shadowRadius: 2
   },
   tableHeadText: {
+    fontFamily: "bahnschrift_reg",
     fontSize: 25,
     color: "black",
     textAlign: "center"

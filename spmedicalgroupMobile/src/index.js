@@ -7,25 +7,27 @@ import {
 
 import Login from "./pages/login";
 import ListarConsultas from "./pages/listarConsultas";
-
-const AuthStack = createStackNavigator({ Login });
+import Perfil from './pages/perfil';
+ const AuthStack = createStackNavigator({ Login });
 
 const BottomTabNavigator = createBottomTabNavigator (
   {
-    ListarConsultas
+    ListarConsultas,
+    Perfil
   },
   {
+    // initialRouteName: "Perfil",
     initialRouteName: "ListarConsultas",
     swipeEnabled: true,
     tabBarOptions: {
       showLabel: false,
-    //   showIcon: true,
-      inactiveBackgroundColor: "#39B158",
-      activeBackgroundColor: "#81DF99",
-      activeTintColor: "#FFFFFF",
-      inactiveTintColor: "#FFFFFF",
+      inactiveBackgroundColor: "#B2DBF1",
+      activeBackgroundColor: "#83bedf",
+      activeTintColor: "#81DF99",
+      inactiveTintColor: "#000000",
       style: {
-        height: 50
+        height: 50,
+        borderTopWidth: 0
       }
     }
   }
@@ -38,8 +40,8 @@ export default createAppContainer(
       AuthStack
     },
     {
-      initialRouteName: "BottomTabNavigator"
-      // initialRouteName: "AuthStack"
+      // initialRouteName: "BottomTabNavigator"
+      initialRouteName: "AuthStack"
     }
   )
 );

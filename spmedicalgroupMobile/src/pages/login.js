@@ -40,7 +40,6 @@ export default class Login extends Component {
     };
 
     await api.post("/login", login, config).then(response => {
-      Alert.alert("Login efetuado com sucesso!");
       let token = response.data.token;
       auth.setItem(token); // Atribui o token para AsyncStorage
       this.props.navigation.navigate("ListarConsultas");
@@ -109,6 +108,7 @@ const styles = StyleSheet.create({
     // padding: 40
   },
   upperLogoTextText: {
+    fontFamily: "bahnschrift_reg",
     color: "#262626",
     fontSize: 40,
     fontFamily: "Bahnschrift"
@@ -130,10 +130,12 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   loginh1: {
+    fontFamily: "bahnschrift_reg",
     fontSize: 35,
     color: "#262626"
   },
   inputEmail: {
+    fontFamily: "bahnschrift_reg",
     width: 300,
     fontSize: 20,
     backgroundColor: "#fff",
@@ -143,6 +145,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 1
   },
   inputSenha: {
+    fontFamily: "bahnschrift_reg",
     width: 300,
     fontSize: 20,
     backgroundColor: "#fff",
