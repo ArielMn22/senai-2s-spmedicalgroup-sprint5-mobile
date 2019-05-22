@@ -8,7 +8,9 @@ import {
 import Login from "./pages/login";
 import ListarConsultas from "./pages/listarConsultas";
 import Perfil from './pages/perfil';
- const AuthStack = createStackNavigator({ Login });
+
+const AuthStack = createStackNavigator({ Login });
+// const SplashStack = createStackNavigator({ SplashScreen });
 
 const BottomTabNavigator = createBottomTabNavigator (
   {
