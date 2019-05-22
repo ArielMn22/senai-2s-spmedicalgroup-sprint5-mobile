@@ -7,7 +7,8 @@ import {
   FlatList,
   Alert,
   ScrollView,
-  TouchableOpacity
+  TouchableOpacity,
+  Dimensions
 } from "react-native";
 
 import api from "../services/api";
@@ -103,7 +104,8 @@ export default class ListarConsultas extends Component {
 
 const styles = StyleSheet.create({
   main: {
-    height: "100%",
+    // height: "100%",
+    height: Dimensions.get("window").height,
     width: "100%"
     // justifyContent: 'space-between'
   },
@@ -120,7 +122,11 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "white",
     alignItems: "center",
-    justifyContent: "space-around"
+    justifyContent: "space-around",
+    // height: '100%',
+    // width: '100%'
+    // height: Dimensions.get("window").height,
+    // width: Dimensions.get("window").width
   },
   userImage: {
     // marginTop: 20,
@@ -137,7 +143,8 @@ const styles = StyleSheet.create({
     width: 200
   },
   dadosUsuario: {
-    width: "80%"
+    // height: Dimensions.get("window").height,
+    // width: Dimensions.get("window").width
   },
   dadosUsuarioText: {
     width: 300,

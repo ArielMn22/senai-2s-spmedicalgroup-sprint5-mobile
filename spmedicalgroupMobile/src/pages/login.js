@@ -7,11 +7,12 @@ import {
   TextInput,
   Alert,
   AsyncStorage,
-  TouchableOpacity
+  TouchableOpacity,
+  StatusBar
 } from "react-native";
 
 import api from "../services/api";
-import auth from "../services/auth"
+import auth from "../services/auth";
 
 export default class Login extends Component {
   static navigationOptions = {
@@ -49,6 +50,7 @@ export default class Login extends Component {
   render() {
     return (
       <View style={styles.main}>
+        <StatusBar backgroundColor="white" barStyle="dark-content" />
         <View style={styles.upperLogoText}>
           <View style={styles.upperLogoTextImage}>
             <Image
@@ -90,9 +92,9 @@ export default class Login extends Component {
 
 const styles = StyleSheet.create({
   main: {
-    height: '100%',
-    width: '100%',
-    justifyContent: 'center'
+    height: "100%",
+    width: "100%",
+    justifyContent: "center"
   },
   tabNavigatorIconHome: {
     height: 35,
@@ -136,7 +138,7 @@ const styles = StyleSheet.create({
   },
   inputEmail: {
     fontFamily: "bahnschrift_reg",
-    width: '98%',
+    width: "98%",
     fontSize: 25,
     backgroundColor: "#fff",
     borderRadius: 5,
@@ -146,7 +148,7 @@ const styles = StyleSheet.create({
   },
   inputSenha: {
     fontFamily: "bahnschrift_reg",
-    width: '98%',
+    width: "98%",
     fontSize: 25,
     backgroundColor: "#fff",
     borderRadius: 5,

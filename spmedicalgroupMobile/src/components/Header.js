@@ -6,9 +6,10 @@ import {
   StyleSheet,
   FlatList,
   Alert,
-  ScrollView
+  ScrollView,
+  StatusBar
 } from "react-native";
-import jwtDecode from 'jwt-decode';
+import jwtDecode from "jwt-decode";
 import auth from "../services/auth";
 
 export default class Header extends Component {
@@ -33,6 +34,7 @@ export default class Header extends Component {
   render() {
     return (
       <View style={styles.header}>
+        <StatusBar backgroundColor="white" barStyle="dark-content" />
         <View style={styles.headerImage}>
           <Image
             style={styles.headerImageImg}
