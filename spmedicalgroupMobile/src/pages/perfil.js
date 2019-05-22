@@ -21,8 +21,9 @@ export default class ListarConsultas extends Component {
     super();
 
     this.state = {
+      emailUsuario: "",
+      nomeUsuario: "",
       tipoUsuario: "",
-      listaConsultas: []
     };
   }
 
@@ -60,14 +61,6 @@ export default class ListarConsultas extends Component {
     )
   };
 
-  renderizaConsulta = ({ item, index }) => (
-    <GerarLinhaConsulta
-      item={item}
-      index={index}
-      tipoUsuario={this.state.tipoUsuario}
-    />
-  );
-
   render() {
     return (
       <View style={styles.main}>
@@ -96,8 +89,8 @@ export default class ListarConsultas extends Component {
           <TouchableOpacity
             style={styles.sairBtn}
             onPress={() => {
-                auth.removeItem();
-                this.props.navigation.navigate("Login");
+              auth.removeItem();
+              this.props.navigation.navigate("Login");
             }}
           >
             <Text style={styles.sairBtnText}>Sair</Text>
@@ -126,11 +119,12 @@ const styles = StyleSheet.create({
   },
   container: {
     backgroundColor: "white",
-    alignItems: "center"
+    alignItems: "center",
+    justifyContent: "space-around"
   },
   userImage: {
-    marginTop: 20,
-    marginBottom: 20,
+    // marginTop: 20,
+    // marginBottom: 20,
     height: 250,
     width: 250,
     backgroundColor: "#f6f6f6",
@@ -143,24 +137,25 @@ const styles = StyleSheet.create({
     width: 200
   },
   dadosUsuario: {
-    width: "100%"
+    width: "80%"
   },
   dadosUsuarioText: {
+    width: 300,
     marginTop: 10,
     fontSize: 25,
     color: "#262626",
     fontFamily: "bahnschrift_reg"
   },
   sairBtn: {
-      height: 50,
-      width: 150,
-      marginTop: 20,
-      justifyContent: 'center',
-      alignItems: 'center'
+    height: 50,
+    width: 150,
+    // marginTop: 20,
+    justifyContent: "center",
+    alignItems: "center"
   },
   sairBtnText: {
     fontSize: 20,
-    fontFamily: 'bahnschrift_reg',
-    color: '#262626'
+    fontFamily: "bahnschrift_reg",
+    color: "#262626"
   }
 });

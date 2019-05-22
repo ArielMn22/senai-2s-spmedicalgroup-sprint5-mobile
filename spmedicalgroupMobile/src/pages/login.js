@@ -136,8 +136,8 @@ const styles = StyleSheet.create({
   },
   inputEmail: {
     fontFamily: "bahnschrift_reg",
-    width: 300,
-    fontSize: 20,
+    width: '98%',
+    fontSize: 25,
     backgroundColor: "#fff",
     borderRadius: 5,
     shadowColor: "black",
@@ -146,8 +146,8 @@ const styles = StyleSheet.create({
   },
   inputSenha: {
     fontFamily: "bahnschrift_reg",
-    width: 300,
-    fontSize: 20,
+    width: '98%',
+    fontSize: 25,
     backgroundColor: "#fff",
     borderRadius: 5,
     shadowColor: "black",

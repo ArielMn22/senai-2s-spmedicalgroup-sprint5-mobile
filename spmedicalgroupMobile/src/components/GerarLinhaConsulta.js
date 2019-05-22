@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#757575",
     fontFamily: "bahnschrift_reg",
-    fontSize: 20
+    fontSize: 25
   },
   tableBorder: {
     borderColor: "#262626"
