@@ -1,54 +1,28 @@
+import auth from "./services/auth";
+import router from "./services/router";
+import React, { Component } from "react";
+import { Alert } from "react-native";
 import {
+  createStackNavigator,
   createBottomTabNavigator,
   createAppContainer,
-  createSwitchNavigator,
-  createStackNavigator
+  createSwitchNavigator
 } from "react-navigation";
-
 import Login from "./pages/login";
 import ListarConsultas from "./pages/listarConsultas";
 import Perfil from "./pages/perfil";
-import auth from "./services/auth";
+// import auth from './services/auth';
 
-// import {
-//   createRootNavigator,
-//   BottomTabNavigator,
-//   AuthStack
-// } from "./components/routes.js";
-
-// export default class App extends Component {
-//   constructor() {
-//     super();
-//     this.state = {
-//       signed: false,
-//       signLoaded: false
-//     };
-//   }
-
-//   componentWillMount() {
-//     auth.isSignedIn()
-//       .then(res => this.setState({ signed: res, signLoaded: true }))
-//       .catch(err => alert("Erro"));
-//   }
-
-//   render() {
-//     const { signLoaded, signed } = this.state;
-
-//     if (!signLoaded) {
-//       return null;
-//     }
-
-//     const Layout = createRootNavigator(signed);
-//     return <Layout />;
-//   }
-// }
 const AuthStack = createStackNavigator({ Login });
-// const SplashStack = createStackNavigator({ SplashScreen });
 
-const BottomTabNavigator = createBottomTabNavigator(
+const SignedIn = createBottomTabNavigator(
   {
-    ListarConsultas,
-    Perfil
+    ListarConsultas: {
+      screen: ListarConsultas
+    },
+    Perfil: {
+      screen: Perfil
+    }
   },
   {
     // initialRouteName: "Perfil",
@@ -68,17 +42,90 @@ const BottomTabNavigator = createBottomTabNavigator(
   }
 );
 
-let token = auth.isSignedIn();
-
-export default createAppContainer(
+const Logado = createAppContainer(
   createSwitchNavigator(
     {
-      BottomTabNavigator,
-      AuthStack
+      AuthStack,
+      SignedIn
     },
     {
-      // initialRouteName: "BottomTabNavigator"
-      initialRouteName: token ? "BottomTabNavigator" : "AuthStack"
+      initialRouteName: "SignedIn"
     }
   )
 );
+
+const Deslogado = createAppContainer(
+  createSwitchNavigator(
+    {
+      AuthStack,
+      SignedIn
+    },
+    {
+      initialRouteName: "AuthStack"
+    }
+  )
+);
+
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      signedIn: false,
+      checkedSignIn: false,
+      token: ""
+    };
+  }
+
+  getToken = async () => {
+    let _token = await auth.getItem().then(res => (token = res));
+
+    this.setState({ token: _token });
+  };
+
+  componentDidMount = async () => {
+    console.warn("entrou");
+
+    let token = await auth.getItem().then(res => (token = res));
+
+    // let isSignedIn = async () => {
+    //   const token = await auth.getItem().then(res => (token = res));
+    //   console.warn("token");
+    //   console.warn(token);
+
+    //   return token !== null ? true : false;
+    // };
+
+    console.warn(token);
+
+    token !== null
+      ? this.setState({ signedIn: true })
+      : this.setState({ signedIn: false });
+
+    this.setState({ checkedSignIn: true });
+
+    // auth
+    //   .isSignedIn()
+    //   .then(res => {
+    //     res !== null
+    //       ? this.setState({ signedIn: true })
+    //       : this.setState({ signedIn: false });
+
+    //     this.setState({ checkedSignIn: true });
+    //   })
+    //   .catch(err => Alert.alert("Ocorreu um erro!"));
+  };
+
+  render() {
+    const { checkedSignIn, signedIn } = this.state;
+
+    // If we haven't checked AsyncStorage yet, don't render anything (better ways to do this)
+    // if (!checkedSignIn) {
+    //   return null;
+    // }
+
+    const Layout = this.state.signedIn ? Logado : Deslogado;
+
+    return <Layout />;
+  }
+}
