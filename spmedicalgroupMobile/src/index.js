@@ -1,5 +1,4 @@
 import auth from "./services/auth";
-import router from "./services/router";
 import React, { Component } from "react";
 import { Alert } from "react-native";
 import {
@@ -11,7 +10,6 @@ import {
 import Login from "./pages/login";
 import ListarConsultas from "./pages/listarConsultas";
 import Perfil from "./pages/perfil";
-// import auth from './services/auth';
 
 const AuthStack = createStackNavigator({ Login });
 
@@ -25,7 +23,6 @@ const SignedIn = createBottomTabNavigator(
     }
   },
   {
-    // initialRouteName: "Perfil",
     initialRouteName: "ListarConsultas",
     swipeEnabled: true,
     tabBarOptions: {
@@ -84,45 +81,17 @@ export default class App extends Component {
   };
 
   componentDidMount = async () => {
-    console.warn("entrou");
-
     let token = await auth.getItem().then(res => (token = res));
-
-    // let isSignedIn = async () => {
-    //   const token = await auth.getItem().then(res => (token = res));
-    //   console.warn("token");
-    //   console.warn(token);
-
-    //   return token !== null ? true : false;
-    // };
-
-    console.warn(token);
 
     token !== null
       ? this.setState({ signedIn: true })
       : this.setState({ signedIn: false });
 
     this.setState({ checkedSignIn: true });
-
-    // auth
-    //   .isSignedIn()
-    //   .then(res => {
-    //     res !== null
-    //       ? this.setState({ signedIn: true })
-    //       : this.setState({ signedIn: false });
-
-    //     this.setState({ checkedSignIn: true });
-    //   })
-    //   .catch(err => Alert.alert("Ocorreu um erro!"));
   };
 
   render() {
     const { checkedSignIn, signedIn } = this.state;
-
-    // If we haven't checked AsyncStorage yet, don't render anything (better ways to do this)
-    // if (!checkedSignIn) {
-    //   return null;
-    // }
 
     const Layout = this.state.signedIn ? Logado : Deslogado;
 
